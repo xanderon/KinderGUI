@@ -4,8 +4,8 @@
       <md-ripple>
         <md-card-header>
           <div class="md-title">{{ amount }}</div>
-          <div class="md-subhead">{{ date }}</div>
-          <div class="md-subhead">{{ name }}</div>
+          <div class="md-subhead">{{ `${name} ${date}` }}</div>
+          
         </md-card-header>
 
         <md-card-content>
