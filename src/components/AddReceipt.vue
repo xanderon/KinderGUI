@@ -9,7 +9,7 @@
         <md-card-content>
           <!-- Name Input -->
           <md-field :class="getValidationClass('vname')">
-            <label for="vname">Name</label>
+            <label for="vname">Child Name</label>
             <md-input name="vname" id="vname" v-model="form.vname" :disabled="sending" />
             <span class="md-error" v-if="!$v.form.vname.required">The first name is required</span>
           </md-field>
@@ -36,12 +36,12 @@
             />
             <span class="md-error" v-if="!$v.form.vdescription.required">The first name is required</span>
           </md-field>
-        </md-card-content>
 
-        <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Add receipt</md-button>
-          <!-- <md-button>Reset Fields</md-button>-->
-        </md-card-actions>
+          <md-card-actions>
+            <md-button type="submit" class="md-primary" :disabled="sending">Add receipt</md-button>
+            <!-- <md-button>Reset Fields</md-button>-->
+          </md-card-actions>
+        </md-card-content>
       </form>
     </md-card>
   </div>

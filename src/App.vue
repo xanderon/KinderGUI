@@ -1,21 +1,48 @@
 <template>
   <md-app md-waterfall md-mode="fixed">
     <my-navbar slot="md-app-toolbar"></my-navbar>
+
+    <md-app-toolbar class="md-primary">
+      <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
+        <md-icon>menu</md-icon>
+      </md-button>
+      <span class="md-title">Kindergarten Receipts Management</span>
+      <!-- <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><router-link to="/" class="nav-link">Home</router-link></li>
+            <li class="nav-item"><router-link to="/receipts" class="nav-link">About</router-link></li>
+            <li class="nav-item"><router-link to="/addReceipts" class="nav-link">Contact</router-link></li>
+          </ul>
+        </div>
+      </nav>
+      <router-view class="view"></router-view> -->
+    </md-app-toolbar>
+
+  
+
     <md-app-content>
-      <AddReceipt />
-      <md-card md-with-hover>
-        <Card
-          is="Card"
-          v-for="(chitanta) in getAllReceipts"
-          v-bind:key="chitanta.date"
-          v-bind:name="chitanta.child_name"
-          v-bind:date="chitanta.date"
-          v-bind:amount="chitanta.amount"
-          v-bind:description="chitanta.description"
-        />
-      </md-card>
+
+      <div>
+
+    <md-tabs md-sync-route>
+      <md-tab id="tab-home" md-label="Home" :md-active="isPath('/')" exact>  <!--<md-tab id="tab-home" md-label="Home" to="/" exact> -->
+      </md-tab>
+
+      <md-tab id="tab-pages" md-label="Receipts" :md-active="isPath('/receipts')">
+      </md-tab>
+
+      <md-tab id="tab-posts" md-label="AddReceipts" :md-active="isPath('/addReceipts')">
+      </md-tab>
+
+    </md-tabs>
+  </div>
+      <component v-bind:is="component" />
+    <button v-on:click="toggle">Toggle</button>
+      
       <br />
       <br />
+      <router-view></router-view>
       <br />
       <br />| Version: KinderUI 1.0 |-| Build: 0.0.7 |
     </md-app-content>
@@ -23,7 +50,7 @@
 </template>
 
 <script>
-import Card from "./components/Card.vue";
+import Receipts from "./components/Receipts.vue";
 import AddReceipt from "./components/AddReceipt.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -33,7 +60,17 @@ export default {
     this.fetchReceipts();
   },
   methods: {
-    ...mapActions(["fetchReceipts"])
+    isPath (path) {
+           return this.$route.path === path
+        },
+    ...mapActions(["fetchReceipts"]),
+    toggle(){
+      if (this.component === Receipts) {
+        this.component = AddReceipt;
+      } else {
+        this.component = Receipts;
+      }
+    }
   },
   computed: {
     ...mapGetters(["allReceipts"]), // eslint-disable-line no-unused-vars
@@ -43,6 +80,9 @@ export default {
   },
   data() {
     return {
+
+      component:"AddReceipt",
+      menuVisible: false,
       chitanteMock: [
         {
           name: "Leon",
@@ -56,11 +96,11 @@ export default {
           amount: "150 Lei",
           description: "TestD2"
         }
-      ]
+      ],
     };
   },
   components: {
-    Card,
+    Receipts,
     AddReceipt
   }
 };
