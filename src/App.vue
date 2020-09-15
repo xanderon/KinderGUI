@@ -1,30 +1,34 @@
 <template>
   <md-app md-waterfall md-mode="fixed">
     <my-navbar slot="md-app-toolbar"></my-navbar>
+
+    <md-app-toolbar class="md-primary">
+      <!-- <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
+        <md-icon>home</md-icon>
+      </md-button>-->
+      <span class="md-title">Kindergarten Receipts Management</span>
+    </md-app-toolbar>
+
     <md-app-content>
-      <AddReceipt />
-      <md-card md-with-hover>
-        <Card
-          is="Card"
-          v-for="(chitanta) in getAllReceipts"
-          v-bind:key="chitanta.date"
-          v-bind:name="chitanta.child_name"
-          v-bind:date="chitanta.date"
-          v-bind:amount="chitanta.amount"
-          v-bind:description="chitanta.description"
-        />
-      </md-card>
+      <div>
+        <md-tabs md-sync-route>
+          <md-tab id="tab-home" md-icon="home" to="/" exact></md-tab>  <!-- md-label="Home" -->
+
+          <md-tab id="tab-pages" md-label="Receipts" to="/receipts"></md-tab>
+
+          <md-tab id="tab-posts" md-label="Add Receipts" to="/addReceipts"></md-tab>
+        </md-tabs>
+      </div>
       <br />
       <br />
+      <router-view></router-view>
       <br />
-      <br />| Version: KinderUI 1.0 |-| Build: 0.0.7 |
+      <br />ᕦ( ͡° ͜ʖ ͡°)ᕤ Version: KinderUI 1.0 → Build: 8
     </md-app-content>
   </md-app>
 </template>
 
 <script>
-import Card from "./components/Card.vue";
-import AddReceipt from "./components/AddReceipt.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -33,36 +37,37 @@ export default {
     this.fetchReceipts();
   },
   methods: {
-    ...mapActions(["fetchReceipts"])
+    isPath(path) {
+      return this.$route.path === path;
+    },
+    ...mapActions(["fetchReceipts"]),
   },
   computed: {
     ...mapGetters(["allReceipts"]), // eslint-disable-line no-unused-vars
     getAllReceipts() {
       return this.allReceipts;
-    }
+    },
   },
   data() {
     return {
+      component: "AddReceipt",
+      menuVisible: false,
       chitanteMock: [
         {
           name: "Leon",
           date: "20.10.2020",
           amount: "140 Lei",
-          description: "TestD1"
+          description: "TestD1",
         },
         {
           name: "Mina",
           date: "20.10.2020",
           amount: "150 Lei",
-          description: "TestD2"
-        }
-      ]
+          description: "TestD2",
+        },
+      ],
     };
   },
-  components: {
-    Card,
-    AddReceipt
-  }
 };
 </script>
 
