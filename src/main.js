@@ -5,6 +5,7 @@ import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
+import Menu from "./components/Menu.vue";
 import Receipts from "./components/Receipts.vue";
 import AddReceipt from "./components/AddReceipt.vue";
 
@@ -17,10 +18,8 @@ Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
 const router = new VueRouter({
-  mode: 'history',
-  base: __dirname,
   routes: [
-    { path: '/', name: 'home', component: AddReceipt },
+    { path: '/', name: 'home', component: Menu },
     { path: '/receipts', name: 'receipts', component: Receipts },
     { path: '/addReceipts', name: 'addReceipts', component: AddReceipt }
   ]
